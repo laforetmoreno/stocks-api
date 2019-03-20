@@ -3,8 +3,6 @@ const Users = require("../models/Users");
 const create = async (req, res) => {
   const { name, email, phone } = req.body;
 
-  const users = await Users.find();
-
   try {
     const user = await Users.create({
       name,

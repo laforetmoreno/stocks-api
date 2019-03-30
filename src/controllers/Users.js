@@ -1,14 +1,22 @@
 const User = require("../models/User");
+const { transporter, mailOptions } = require("./mailer");
+
+const { MAILER_EMAIL } = process.env;
 
 const create = async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { name, email, phone, message } = req.body;
 
   try {
-    const users = await retrieveAll();
-
-    users.map(user => {
-      if (user.email === email) return;
-    });
+    transporter.sendMail(
+      mailOptions(MAILER_EMAIL, email, name, message),
+      function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.info("Send Email: " + info.response);
+        }
+      }
+    );
 
     const user = await User.create({
       name,
@@ -16,7 +24,7 @@ const create = async (req, res) => {
       phone
     });
 
-    return res.json(user);
+    res.json(user);
   } catch (error) {
     res.status(401).send("We could not create the user.");
   }

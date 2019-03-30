@@ -1,10 +1,10 @@
 const routes = require("express").Router();
+const userController = require("./controllers/users");
 
-const userControllers = require("./controllers/Users");
-
-routes.post("/users", userControllers.create);
-routes.get("/users", userControllers.retrieveAll);
-routes.get("/users/:id", userControllers.retrieveById);
-routes.delete("/users/:id", userControllers.deleteUser);
+// Users
+routes.post("/users", userController.create);
+routes.get("/users", userController.retrieveAll);
+routes.get("/users/:id", userController.retrieveById);
+routes.delete("/users/:id", userController.deleteUser);
 
 module.exports = routes;

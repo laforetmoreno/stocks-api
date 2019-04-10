@@ -6,27 +6,32 @@ const { MAILER_EMAIL } = process.env;
 const create = async (req, res) => {
   const { name, email, phone, message } = req.body;
 
-  try {
-    transporter.sendMail(
-      mailOptions(MAILER_EMAIL, email, name, message),
-      function(error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.info("Send Email: " + info.response);
-        }
+  transporter.sendMail(
+    mailOptions(MAILER_EMAIL, email, name, message),
+    function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.info("Send Email: " + info.response);
       }
-    );
+    }
+  );
 
-    const user = await User.create({
+  const allUsers = await retrieveAll();
+  const existingUsers = allUsers
+    .map(existingUser => existingUser.email)
+    .filter(userMail => userMail === email);
+
+  if (existingUsers.length > 0) {
+    res.status(409).send("User already exists");
+  } else {
+    await User.create({
       name,
       email,
       phone
     });
 
-    res.json(user);
-  } catch (error) {
-    res.status(401).send("We could not create the user.");
+    res.status(200).send("Created");
   }
 };
 
@@ -34,7 +39,7 @@ const retrieveAll = async (req, res) => {
   const users = await User.find();
 
   try {
-    return res.json(users);
+    return users;
   } catch (error) {
     return res.status(404).send(error, "No users found.");
   }

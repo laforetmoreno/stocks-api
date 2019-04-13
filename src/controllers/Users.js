@@ -4,7 +4,7 @@ const { transporter, mailOptions } = require("./mailer");
 const { MAILER_EMAIL } = process.env;
 
 const create = async (req, res) => {
-  const { name, email, phone, message, subject } = req.body;
+  const { name, email, message, subject } = req.body;
 
   transporter.sendMail(
     mailOptions(MAILER_EMAIL, email, name, message, subject),
@@ -27,9 +27,7 @@ const create = async (req, res) => {
     res.status(409).send("User already exists.");
   } else {
     await User.create({
-      name,
-      email,
-      phone
+      email
     });
 
     res.status(200).send("Created");

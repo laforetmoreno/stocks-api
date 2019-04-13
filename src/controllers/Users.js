@@ -17,13 +17,14 @@ const create = async (req, res) => {
     }
   );
 
-  const allUsers = await retrieveAll();
+  const allUsers = await User.find();
+
   const existingUsers = allUsers
     .map(existingUser => existingUser.email)
     .filter(userMail => userMail === email);
 
   if (existingUsers.length > 0) {
-    res.status(409).send("User already exists");
+    res.status(409).send("User already exists.");
   } else {
     await User.create({
       name,
@@ -39,7 +40,7 @@ const retrieveAll = async (req, res) => {
   const users = await User.find();
 
   try {
-    return users;
+    return res.json(users);
   } catch (error) {
     return res.status(404).send(error, "No users found.");
   }
@@ -51,7 +52,7 @@ const retrieveById = async (req, res) => {
   try {
     return res.json(user);
   } catch (error) {
-    return res.status(404).send("This user possibly does not exist");
+    return res.status(404).send("This user possibly does not exist.");
   }
 };
 

@@ -4,10 +4,10 @@ const { transporter, mailOptions } = require("./mailer");
 const { MAILER_EMAIL } = process.env;
 
 const create = async (req, res) => {
-  const { name, email, phone, message } = req.body;
+  const { name, email, phone, message, subject } = req.body;
 
   transporter.sendMail(
-    mailOptions(MAILER_EMAIL, email, name, message),
+    mailOptions(MAILER_EMAIL, email, name, message, subject),
     function(error, info) {
       if (error) {
         console.log(error);

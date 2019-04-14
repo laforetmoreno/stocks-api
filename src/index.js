@@ -13,6 +13,7 @@ const app = express();
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true
 });
+mongoose.Promise = global.Promise;
 
 app.use(cors());
 app.use(morgan("dev"));

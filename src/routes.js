@@ -4,6 +4,8 @@ const routes = require("express").Router();
 const User = require("./models/User");
 const { transporter, mailOptions } = require("./controllers/mailer");
 
+const { MAILER_EMAIL } = process.env;
+
 // Heathcheck
 routes.get("/", (req, res) => {
   res.status(200).send("Up!");

@@ -10,8 +10,8 @@ routes.get("/", (req, res) => {
 });
 
 // Users;
-routes.post("/users", create);
-routes.get("/users", retrieveAll);
+routes.post("/users", create());
+routes.get("/users", retrieveAll());
 // routes.get("/users/:id", userController.retrieveById);
 // routes.delete("/users/:id", userController.deleteUser);
 

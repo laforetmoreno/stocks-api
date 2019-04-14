@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const port = 8888;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -22,4 +21,6 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
-app.listen(port, () => console.log(`Server running in port: ${port}`));
+app.listen(proces.env.PORT || 8888, () =>
+  console.log(`Server running in port: ${proces.env.PORT || 8888}`)
+);

@@ -1,6 +1,6 @@
 const routes = require("express").Router();
 // const userController = require("./controllers/users");
-const User = require("../models/User");
+const User = require("./models/User");
 
 // Heathcheck
 routes.get("/", (req, res) => {

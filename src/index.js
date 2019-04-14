@@ -21,6 +21,6 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
-app.listen(proces.env.PORT || 8888, () =>
-  console.log(`Server running in port: ${proces.env.PORT || 8888}`)
+app.listen(process.env.PORT || 8888, () =>
+  console.log(`Server running in port: ${process.env.PORT || 8888}`)
 );

@@ -50,13 +50,13 @@ routes.post("/users", async (req, res) => {
   }
 });
 
-routes.get("/users", async (req, res) => {
+routes.get("/users/:id", async (req, res) => {
   const users = await User.find();
 
-  try {
+  if (req.params.id === process.env.ACCESS_KEY) {
     return res.json(users);
-  } catch (error) {
-    return res.status(404).send(error, "No users found.");
+  } else {
+    return res.status(401).send("access denied");
   }
 });
 

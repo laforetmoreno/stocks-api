@@ -95,7 +95,7 @@ routes.post("/price/:key/:value", async (req, res) => {
   const { value, key } = req.params;
 
   try {
-    if (key === process.env.PRICE_KEY && value) {
+    if (key === process.env.CREATE_PRICE_KEY && value) {
       await Price.create({
         value
       });

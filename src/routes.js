@@ -2,6 +2,8 @@ const routes = require("express").Router();
 // const userController = require("./controllers/users");
 
 const User = require("./models/User");
+const Price = require("./models/Price");
+
 const { transporter, mailOptions } = require("./controllers/mailer");
 
 const { MAILER_EMAIL } = process.env;
@@ -17,6 +19,7 @@ routes.get("/", (req, res) => {
 // routes.get("/users/:id", userController.retrieveById);
 // routes.delete("/users/:id", userController.deleteUser);
 
+// Create user
 routes.post("/users", async (req, res) => {
   const { name, email, message, subject } = req.body;
 
@@ -50,6 +53,7 @@ routes.post("/users", async (req, res) => {
   }
 });
 
+// Get all users
 routes.get("/users/:id", async (req, res) => {
   const users = await User.find();
 
@@ -60,6 +64,7 @@ routes.get("/users/:id", async (req, res) => {
   }
 });
 
+// Get user by id
 routes.get("/users/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -70,6 +75,7 @@ routes.get("/users/:id", async (req, res) => {
   }
 });
 
+// Delete user
 routes.delete("/users/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -81,6 +87,40 @@ routes.delete("/users/:id", async (req, res) => {
     return res
       .status(404)
       .send("The user can not be removed, possibly she does not.");
+  }
+});
+
+// Create price e-book
+routes.post("/price/:key/:value", async (req, res) => {
+  const { value, key } = req.params;
+
+  try {
+    if (key === process.env.PRICE_KEY && value) {
+      await Price.create({
+        value
+      });
+
+      return res.status(201).send("Price created");
+    }
+  } catch (error) {
+    return res.status(401).send("Access denied");
+  }
+});
+
+// Get atual price e-book
+routes.get("/price/:key", async (req, res) => {
+  const { key } = req.params;
+  const prices = await Price.find();
+
+  try {
+    if (key === process.env.PRICE_KEY) {
+      const atualPrice = prices.map(price => price.value).slice(-1)[0];
+
+      return res.status(201).send(atualPrice);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send("Error", error);
   }
 });
 

@@ -1,7 +1,7 @@
 {
-  "name": "pedro-laforet",
+  "name": "stocks-api",
   "version": "1.0.0",
-  "description": "Site Pedro",
+  "description": "Stocks API",
   "main": "index.js",
   "author": "Moreno Laforet <laforetmoreno@gmail.com>",
   "scripts": {
@@ -17,7 +17,6 @@
     "mongoose": "^5.4.19",
     "morgan": "^1.9.1",
     "node-restful": "^0.2.6",
-    "nodemailer": "^6.0.0",
     "nodemon": "^1.18.10"
   }
 }

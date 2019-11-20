@@ -26,6 +26,9 @@ const StocksSchema = new mongoose.Schema({
   },
   dayChange: {
     type: Number,
+  },
+  occupationArea: {
+    type: String,
   }
 });
 

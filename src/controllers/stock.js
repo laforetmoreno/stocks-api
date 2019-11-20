@@ -2,6 +2,7 @@ const Stock = require("../models/Stock");
 
 const create = async (req, res) => {
   try {
+    console.log(req.body, 'body')
     const stock = await Stock.create(req.body)
 
     res.status(200).send({ message: 'Created', stock}); 

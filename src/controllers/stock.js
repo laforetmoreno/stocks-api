@@ -32,13 +32,8 @@ const retrieveById = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { quantity, occupationArea } = req.body;
-
   try {
-    const stock = await Stock.findOneAndUpdate(req.params.id, {
-      quantity,
-      occupationArea
-    });
+    const stock = await Stock.update(req.params.id, req.body);
 
     return res.status(200).send({ message: 'Updated', stock});
   } catch (error) {
